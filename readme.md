@@ -6,7 +6,7 @@ look for changes at http://localhost:8080
 
 ####Gulpfile.js quick reference
 ```js
-	var compiler = webpack(webpackDevConfig);
+var compiler = webpack(webpackDevConfig);
 
 gulp.task('default', ['watch']);
 
