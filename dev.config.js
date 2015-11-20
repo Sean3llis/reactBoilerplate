@@ -4,6 +4,8 @@ module.exports = {
 		path: __dirname + '/app/js',
 		filename: 'app.min.js'
 	},
+	devtool: 'sourcemap',
+	debug: true,
 	module: {
 	  loaders: [
 	    {

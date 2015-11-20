@@ -1,12 +1,12 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.js');
+var webpackDevConfig = require('./dev.config.js');
 var WebpackDevServer = require("webpack-dev-server");
 
-var compiler = webpack(webpackConfig);
+var compiler = webpack(webpackDevConfig);
 
-gulp.task('default', ['pack', 'serve', 'watch']);
+gulp.task('default', ['watch']);
 
 gulp.task('pack', function(callback){
     compiler.run(function(err, stats) {
@@ -31,6 +31,6 @@ gulp.task('serve', function(callback){
     });
 });
 
-gulp.task('watch', function(){
+gulp.task('watch', ['pack'], function(){
 	gulp.watch('src/**/*.js', ['pack']);
 });
