@@ -4,16 +4,22 @@ var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.js');
 var WebpackDevServer = require("webpack-dev-server");
 
+var compiler = webpack(webpackConfig);
+
+gulp.task('default', ['pack', 'serve', 'watch']);
+
 gulp.task('pack', function(callback){
-    var compiler = webpack(webpackConfig, function(err, stats) {
+    compiler.run(function(err, stats) {
         if(err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString({
-            // output options
+        	colors: true
         }));
         callback();
     });
+});
 
-    new WebpackDevServer(compiler, {
+gulp.task('serve', function(callback){
+	new WebpackDevServer(compiler, {
         // server and middleware options
     }).listen(8080, "localhost", function(err) {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
@@ -21,6 +27,10 @@ gulp.task('pack', function(callback){
         gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
 
         // keep the server alive or continue?
-        // callback();
+        callback();
     });
+});
+
+gulp.task('watch', function(){
+	gulp.watch('src/**/*.js', ['pack']);
 });
